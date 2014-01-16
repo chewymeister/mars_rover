@@ -20,4 +20,11 @@ describe Rover do
 
     expect(test_rover.current_location).to eq '0 1 N'
   end
+
+  it 'can take multiple commands' do
+    command = 'LRLFFLF'
+    test_rover.move('4 4 N', command)
+
+    expect(test_rover.current_location).to eq '2 3 S'
+  end
 end

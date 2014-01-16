@@ -19,7 +19,7 @@ class Rover
   end
 
   def determine_from(command)
-    commands = command.split
+    commands = command.chars
     commands.each do |direction|
       if direction == 'L'
         @facing -= 1
