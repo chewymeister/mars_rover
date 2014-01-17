@@ -1,5 +1,7 @@
 class Locator 
+  ONE_STEP_IN = { 'N' => 1, 'S' => -1, 'E' => 1, 'W' => -1 }
   DIRECTIONS = ['N','E','S','W']
+
   attr_reader :x
   attr_reader :y
   attr_reader :cardinal
@@ -27,10 +29,22 @@ class Locator
   end
 
   def forward
-    
+    facing_north_or_south? ? move_vertically : move_horizontally
+  end
+
+  def move_horizontally
+    @x += ONE_STEP_IN[current_direction]
+  end
+
+  def move_vertically
+    @y += ONE_STEP_IN[current_direction]
+  end
+
+  def facing_north_or_south?
+    current_direction == 'N' || current_direction == 'S'
   end
 
   def current_location
-    '0 1 N'
+    "#{@x} #{@y} #{current_direction}"
   end
 end

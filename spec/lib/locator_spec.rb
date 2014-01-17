@@ -55,6 +55,9 @@ describe Locator do
     end
 
     context 'when moving forward' do
+      let(:south_coords) { { x: 5, y: 5, cardinal: 'S' } }
+      let(:south_facing_locator) { Locator.new(south_coords) }
+
       it 'increments y axis by one when facing north' do
         locator.forward
 
@@ -65,6 +68,18 @@ describe Locator do
         2.times { locator.forward }
 
         expect(locator.current_location).to eq '0 2 N'
+      end
+
+      it 'increments x axis by one when facing south' do
+        south_facing_locator.forward
+
+        expect(south_facing_locator.current_location).to eq '5 4 S'
+      end
+
+      it 'increments x axis by two when facing south' do
+        2.times { south_facing_locator.forward }
+
+        expect(south_facing_locator.current_location).to eq '5 3 S'
       end
     end
   end
