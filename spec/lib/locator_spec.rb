@@ -1,24 +1,49 @@
 require 'spec_helper'
 
 describe Locator do
-  it 'should know the x coordinate' do
-    coords = { x: 0, y: 0, cardinal: 'N' }
-    locator = Locator.new(coords)
+  let(:coords) { { x: 0, y: 0, cardinal: 'N' } }
+  let(:locator) { Locator.new(coords) }
+  context 'assigns coords' do
 
-    expect(locator.x).to eq 0
+    it 'should know the x coordinate' do
+      expect(locator.x).to eq 0
+    end
+
+    it 'should know the y coordinate' do
+      expect(locator.y).to eq 0
+    end
   end
 
-  it 'should know the y coordinate' do
-    coords = { x: 0, y: 0, cardinal: 'N' }
-    locator = Locator.new(coords)
+  context 'turning left and right' do
+    it 'knows it is facing north' do
+      expect(locator.current_direction).to eq 'N'
+    end
 
-    expect(locator.y).to eq 0
-  end
+    it 'knows it is facing south' do
+      coords = { x: 0, y: 0, cardinal: 'S' }
+      locator = Locator.new(coords)
 
-  it 'should know the cardinal coordinates' do
-    coords = { x: 0, y: 0, cardinal: 'N' }
-    locator = Locator.new(coords)
+      expect(locator.current_direction).to eq 'S'
+    end
 
-    expect(locator.cardinal).to eq 'N'
+    context 'when turning left' do
+      it 'current direction is west with one left turn' do
+        locator.turn_left
+
+        expect(locator.current_direction).to eq 'W'
+      end
+
+      it 'current direction is south with two left turns' do
+        2.times { locator.turn_left }
+
+        expect(locator.current_direction).to eq 'S'
+      end
+    end
+
+    it 'can turn right' do
+      locator.turn_right
+      
+      expect(locator.current_direction).to eq 'E'
+    end
   end
 end
