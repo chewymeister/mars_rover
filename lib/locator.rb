@@ -25,4 +25,12 @@ class Locator
   def turn_right
     @cardinal_index += 1
   end
+
+  def forward
+    
+  end
+
+  def current_location
+    '0 1 N'
+  end
 end

@@ -40,10 +40,32 @@ describe Locator do
       end
     end
 
-    it 'can turn right' do
-      locator.turn_right
-      
-      expect(locator.current_direction).to eq 'E'
+    context 'when turning right' do
+      it 'current direction is east with one right turn' do
+        locator.turn_right
+
+        expect(locator.current_direction).to eq 'E'
+      end
+
+      it 'current direction is south with two right turns' do
+        2.times { locator.turn_left }
+
+        expect(locator.current_direction).to eq 'S'
+      end
+    end
+
+    context 'when moving forward' do
+      it 'increments y axis by one when facing north' do
+        locator.forward
+
+        expect(locator.current_location).to eq '0 1 N'
+      end
+
+      it 'increments y axis by two when facing north' do
+        2.times { locator.forward }
+
+        expect(locator.current_location).to eq '0 2 N'
+      end
     end
   end
 end
