@@ -8,8 +8,12 @@ class Rover
   end
 
   def move(coords, command)
-    @locator.receive(coords)
+    @locator.receive(processed(coords))
     determine_path_from(command)
+  end
+
+  def processed(coords)
+    { x: coords[0].to_i, y: coords[1].to_i }
   end
 
   def current_location
@@ -23,7 +27,8 @@ class Rover
   end
 
   def choose(direction)
-    turn_left_or_right?(direction) ? turn_to_face(direction) : @locator.move_forward
+    puts turn_left_or_right?(direction)
+    turn_left_or_right?(direction) ? turn_to_face(direction) : @locator.forward
   end
 
   def turn_to_face(direction)

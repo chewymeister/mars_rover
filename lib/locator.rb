@@ -4,7 +4,12 @@ class Locator
 
   attr_reader :x
   attr_reader :y
-  attr_reader :cardinal
+  attr_reader :card_index
+
+
+  def card_index
+    @cardinal_index
+  end
 
   def initialize(coords)
     @x = coords[:x]
@@ -50,6 +55,5 @@ class Locator
 
   def receive(coords)
     @x, @y = coords[:x], coords [:y]
-    cardinal_index(coords)
   end
 end
