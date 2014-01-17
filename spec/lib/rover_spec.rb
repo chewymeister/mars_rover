@@ -1,5 +1,4 @@
-require 'rspec'
-require './lib/rover'
+require 'spec_helper'
 
 describe Rover do
   let(:test_rover) { Rover.new }

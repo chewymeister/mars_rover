@@ -4,12 +4,11 @@ class Rover
   ONE_STEP_IN = { 'N' => 1, 'S' => -1, 'E' => 1, 'W' => -1 }
 
   def move(coords, command)
-    assign(coords) 
-    determine_move_from(command)
+    assign(coords) & determine_path_from(command)
   end
 
   def current_location
-    "#{@x.to_s} #{@y.to_s} #{current_direction}"
+    "#{@x} #{@y} #{current_direction}"
   end
 
   private
@@ -38,13 +37,15 @@ class Rover
     DIRECTIONS[@cardinal_index]
   end
 
-  def determine_move_from(commands)
-    list_of(commands).each do |direction|
-      if turn_left_or_right?(direction)
-        turn_to_face(direction)
-      else
-        move_a_space
-      end
+  def determine_path_from(commands)
+    list_of(commands).each { |direction| choose(direction) }
+  end
+
+  def choose(direction)
+    if turn_left_or_right?(direction)
+      turn_to_face(direction)
+    else
+      move_forward
     end
   end
 
@@ -60,19 +61,19 @@ class Rover
     command.chars
   end
 
-  def move_a_space
+  def move_forward
     if facing_north_or_south?
-      go_vertical
+      move_vertically
     else
-      go_horizontal
+      move_horizontally
     end
   end
 
-  def go_horizontal
+  def move_horizontally
     @x += ONE_STEP_IN[current_direction]
   end
 
-  def go_vertical
+  def move_vertically
     @y += ONE_STEP_IN[current_direction]
   end
 
