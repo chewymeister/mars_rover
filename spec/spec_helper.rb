@@ -1,4 +1,4 @@
 require 'rspec'
 require './lib/rover'
 require './lib/interface'
-require './lib/coords'
+require './lib/locator'
