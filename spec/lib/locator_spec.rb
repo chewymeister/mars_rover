@@ -14,4 +14,11 @@ describe Locator do
 
     expect(locator.y).to eq 0
   end
+
+  it 'should know the cardinal coordinates' do
+    coords = { x: 0, y: 0, cardinal: 'N' }
+    locator = Locator.new(coords)
+
+    expect(locator.cardinal).to eq 'N'
+  end
 end
