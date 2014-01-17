@@ -70,16 +70,35 @@ describe Locator do
         expect(locator.current_location).to eq '0 2 N'
       end
 
-      it 'increments x axis by one when facing south' do
-        south_facing_locator.forward
-
-        expect(south_facing_locator.current_location).to eq '5 4 S'
-      end
-
-      it 'increments x axis by two when facing south' do
+      it 'decrements y axis by two when facing south' do
         2.times { south_facing_locator.forward }
 
         expect(south_facing_locator.current_location).to eq '5 3 S'
+      end
+
+
+      it 'increments x axis by one when facing east' do
+        easy_coords = { x: 5, y: 5, cardinal: 'E' }
+        east_facing_locator = Locator.new(easy_coords)
+        east_facing_locator.forward
+
+        expect(east_facing_locator.current_location).to eq '6 5 E'
+      end
+
+      it 'increments x axis by two when facing east' do
+        easy_coords = { x: 5, y: 5, cardinal: 'E' }
+        east_facing_locator = Locator.new(easy_coords)
+        2.times {east_facing_locator.forward}
+
+        expect(east_facing_locator.current_location).to eq '7 5 E'
+      end
+
+      it 'increments x axis by two when facing west' do
+        west_coords = { x: 5, y: 5, cardinal: 'W' }
+        west_facing_locator = Locator.new(west_coords)
+        2.times {west_facing_locator.forward}
+
+        expect(west_facing_locator.current_location).to eq '3 5 W'
       end
     end
   end
