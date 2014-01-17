@@ -5,14 +5,6 @@ describe Locator do
   let(:locator) { Locator.new(coords) }
 
   context 'assigns coords' do
-    it 'should know the x coordinate' do
-      expect(locator.x).to eq 0
-    end
-
-    it 'should know the y coordinate' do
-      expect(locator.y).to eq 0
-    end
-
     it 'reassign coords when given new coords' do
       expect(locator.current_location).to eq '0 0 N'
       new_coords = { x: 2, y: 2, cardinal: 'S' }
@@ -59,6 +51,18 @@ describe Locator do
         2.times { locator.turn_left }
 
         expect(locator.current_direction).to eq 'S'
+      end
+
+      it 'current direction is south with six right turns' do
+        6.times { locator.turn_right }
+
+        expect(locator.current_direction).to eq 'S'
+      end
+
+      it 'current direction is south with six right turns' do
+        23.times { locator.turn_right }
+
+        expect(locator.current_direction).to eq 'W'
       end
     end
   end

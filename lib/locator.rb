@@ -2,11 +2,6 @@ class Locator
   ONE_STEP_IN = { 'N' => 1, 'S' => -1, 'E' => 1, 'W' => -1 }
   DIRECTIONS = ['N','E','S','W']
 
-  attr_reader :x
-  attr_reader :y
-  attr_reader :card_index
-
-
   def card_index
     @cardinal_index
   end
@@ -22,7 +17,7 @@ class Locator
   end
 
   def current_direction
-    DIRECTIONS[@cardinal_index]
+    DIRECTIONS[@cardinal_index%DIRECTIONS.size]
   end
 
   def turn_left
