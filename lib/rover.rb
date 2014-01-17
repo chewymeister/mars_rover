@@ -1,19 +1,29 @@
 class Rover
-  DIRECTIONS = ['N','E','S','W']
   FACING = { 'L' => -1, 'R' => 1 }
-  ONE_STEP_IN = { 'N' => 1, 'S' => -1, 'E' => 1, 'W' => -1 }
   
   def initialize(coords)
     @locator = Locator.new(coords)
   end
 
   def move(coords, command)
-    @locator.receive(processed(coords))
+    give_locator(coords)
     determine_path_from(command)
   end
 
+  def give_locator(coords)
+    @locator.receive(processed(coords))
+  end
+
   def processed(coords)
-    { x: coords[0].to_i, y: coords[1].to_i }
+    { x: take(coords, 0), y: take(coords, 1), cardinal: list(coords)[2]}
+  end
+
+  def take(coords, index)
+    list(coords)[index].to_i
+  end
+
+  def list(coords)
+    coords.split(' ')
   end
 
   def current_location
@@ -27,7 +37,6 @@ class Rover
   end
 
   def choose(direction)
-    puts turn_left_or_right?(direction)
     turn_left_or_right?(direction) ? turn_to_face(direction) : @locator.forward
   end
 

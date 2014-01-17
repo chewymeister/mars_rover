@@ -55,5 +55,6 @@ class Locator
 
   def receive(coords)
     @x, @y = coords[:x], coords [:y]
+    cardinal_index(coords)
   end
 end

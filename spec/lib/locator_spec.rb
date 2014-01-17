@@ -112,4 +112,17 @@ describe Locator do
       end
     end
   end
+
+  context 'receives series of commands' do
+    it 'should do something' do
+      coords = { x: 5, y: 5, cardinal: 'N' }
+      locator = Locator.new(coords)
+      locator.turn_left
+      locator.forward
+      locator.turn_right
+      locator.forward
+
+      expect(locator.current_location).to eq '4 6 N'
+    end
+  end
 end
