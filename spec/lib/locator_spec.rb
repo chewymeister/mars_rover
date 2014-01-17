@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Locator do
   let(:coords) { { x: 0, y: 0, cardinal: 'N' } }
   let(:locator) { Locator.new(coords) }
-  context 'assigns coords' do
 
+  context 'assigns coords' do
     it 'should know the x coordinate' do
       expect(locator.x).to eq 0
     end
@@ -53,11 +53,10 @@ describe Locator do
         expect(locator.current_direction).to eq 'S'
       end
     end
+  end
 
-    context 'when moving forward' do
-      let(:south_coords) { { x: 5, y: 5, cardinal: 'S' } }
-      let(:south_facing_locator) { Locator.new(south_coords) }
-
+  context 'when moving forward' do
+    context 'along y axis' do
       it 'increments y axis by one when facing north' do
         locator.forward
 
@@ -71,29 +70,32 @@ describe Locator do
       end
 
       it 'decrements y axis by two when facing south' do
+        south_coords = { x: 5, y: 5, cardinal: 'S' }
+        south_facing_locator = Locator.new(south_coords) 
         2.times { south_facing_locator.forward }
 
         expect(south_facing_locator.current_location).to eq '5 3 S'
       end
+    end
 
-
+    context 'along x axis' do
       it 'increments x axis by one when facing east' do
-        easy_coords = { x: 5, y: 5, cardinal: 'E' }
-        east_facing_locator = Locator.new(easy_coords)
+        east_coords = { x: 5, y: 5, cardinal: 'E' }
+        east_facing_locator = Locator.new(east_coords)
         east_facing_locator.forward
 
         expect(east_facing_locator.current_location).to eq '6 5 E'
       end
 
       it 'increments x axis by two when facing east' do
-        easy_coords = { x: 5, y: 5, cardinal: 'E' }
-        east_facing_locator = Locator.new(easy_coords)
+        east_coords = { x: 5, y: 5, cardinal: 'E' }
+        east_facing_locator = Locator.new(east_coords)
         2.times {east_facing_locator.forward}
 
         expect(east_facing_locator.current_location).to eq '7 5 E'
       end
 
-      it 'increments x axis by two when facing west' do
+      it 'decrements x axis by two when facing west' do
         west_coords = { x: 5, y: 5, cardinal: 'W' }
         west_facing_locator = Locator.new(west_coords)
         2.times {west_facing_locator.forward}
