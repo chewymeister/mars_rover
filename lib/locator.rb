@@ -47,4 +47,9 @@ class Locator
   def current_location
     "#{@x} #{@y} #{current_direction}"
   end
+
+  def receive(coords)
+    @x, @y = coords[:x], coords [:y]
+    cardinal_index(coords)
+  end
 end

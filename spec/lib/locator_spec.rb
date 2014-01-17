@@ -12,6 +12,14 @@ describe Locator do
     it 'should know the y coordinate' do
       expect(locator.y).to eq 0
     end
+
+    it 'reassign coords when given new coords' do
+      expect(locator.current_location).to eq '0 0 N'
+      new_coords = { x: 2, y: 2, cardinal: 'S' }
+      locator.receive(new_coords)
+
+      expect(locator.current_location).to eq '2 2 S'
+    end
   end
 
   context 'turning left and right' do
