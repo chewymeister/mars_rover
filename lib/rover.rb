@@ -42,11 +42,7 @@ class Rover
   end
 
   def choose(direction)
-    if turn_left_or_right?(direction)
-      turn_to_face(direction)
-    else
-      move_forward
-    end
+    turn_left_or_right?(direction) ? turn_to_face(direction) : move_forward
   end
 
   def turn_left_or_right?(direction)
@@ -62,11 +58,7 @@ class Rover
   end
 
   def move_forward
-    if facing_north_or_south?
-      move_vertically
-    else
-      move_horizontally
-    end
+    facing_north_or_south? ? move_vertically : move_horizontally
   end
 
   def move_horizontally

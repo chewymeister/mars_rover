@@ -1,0 +1,3 @@
+class Coords 
+
+end
