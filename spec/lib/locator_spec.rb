@@ -1,8 +1,4 @@
 require 'spec_helper'
-def boundaries(coords)
-  { upper_x: coords[0], upper_y: coords[1] }
-end
-
 describe Locator do
   let(:north_facing_locator) { Locator.new(coords('N'), boundaries([10,10])) }
   let(:south_facing_locator) { Locator.new(coords('S'), boundaries([10,10])) }
@@ -156,6 +152,14 @@ describe Locator do
         expect(locator.current_location).to eq '10 5 E'
       end
 
+      it 'should resume travel after hitting a boundary' do
+        locator.turn_right
+        20.times { locator.forward }
+        2.times { locator.turn_left }
+        4.times { locator.forward }
+
+        expect(locator.current_location).to eq '6 5 W'
+      end
     end
   end
 
@@ -165,5 +169,9 @@ describe Locator do
 
   def new_position(coords)
     { x: coords[0], y: coords[1], cardinal: coords[2] }
+  end
+
+  def boundaries(coords)
+    { upper_x: coords[0], upper_y: coords[1] }
   end
 end

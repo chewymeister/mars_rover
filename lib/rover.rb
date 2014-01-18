@@ -1,8 +1,8 @@
 class Rover
   FACING = { 'L' => -1, 'R' => 1 }
   
-  def initialize(coords)
-    @locator = Locator.new(coords)
+  def initialize(boundaries)
+    @boundaries = boundaries
   end
 
   def move(coords, command)
@@ -11,7 +11,7 @@ class Rover
   end
 
   def give_locator(coords)
-    @locator.receive(processed(coords))
+    @locator = Locator.new(processed(coords), @boundaries)
   end
 
   def processed(coords)

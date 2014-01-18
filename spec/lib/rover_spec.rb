@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Rover do
-  coords = { x: 1, y: 1, cardinal: 'N' }
-  let(:test_rover) { Rover.new(coords) }
+  boundaries = { upper_x: 10, upper_y: 10 }
+  let(:test_rover) { Rover.new(boundaries) }
 
   it 'can turn left' do
     test_rover.move('0 0 N', 'L')
