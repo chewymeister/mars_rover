@@ -5,10 +5,16 @@ class Rover
     @boundaries = boundaries
   end
 
+  def current_location
+    @locator.current_location
+  end
+
   def move(coords, command)
     give_locator(coords) 
     determine_path_from(command)
   end
+
+  private
 
   def give_locator(coords)
     @locator = Locator.new(processed(coords), @boundaries)
@@ -25,12 +31,6 @@ class Rover
   def list(coords)
     coords.split(' ')
   end
-
-  def current_location
-    @locator.current_location
-  end
-
-  private
 
   def determine_path_from(commands)
     list_of(commands).each { |direction| choose(direction) }
