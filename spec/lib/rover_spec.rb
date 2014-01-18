@@ -4,10 +4,24 @@ describe Rover do
   boundaries = { upper_x: 10, upper_y: 10 }
   let(:test_rover) { Rover.new(boundaries) }
 
-  it 'can turn left' do
-    test_rover.move('0 0 N', 'L')
+  context 'turning left' do
+    it 'should be facing west' do
+      test_rover.move('0 0 N', 'L')
 
-    expect(test_rover.current_location).to eq '0 0 W'
+      expect(test_rover.current_location).to eq '0 0 W'
+    end
+
+    it 'should be facing east' do
+      test_rover.move('0 0 N', 'LLL')
+
+      expect(test_rover.current_location).to eq '0 0 E'
+    end
+
+    it 'should be facing south' do
+      test_rover.move('0 0 N', 'LLLLLL')
+
+      expect(test_rover.current_location).to eq '0 0 S'
+    end
   end
 
   it 'can move right' do
