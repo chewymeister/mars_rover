@@ -3,24 +3,27 @@ class Locator
   DIRECTIONS = ['N','E','S','W']
 
   def initialize(coords)
-    @x, @y = coords[:x], coords[:y]
-    cardinal_index(coords)
+    set(coords)
   end
 
-  def cardinal_index(coords)
-    @cardinal_index = DIRECTIONS.index(coords[:cardinal])  
+  def set(coords)
+    @x, @y, @cardinal = coords[:x], coords [:y], cardinal_to_integer(coords)
+  end
+
+  def cardinal_to_integer(coords)
+    DIRECTIONS.index(coords[:cardinal])  
   end
 
   def current_direction
-    DIRECTIONS[@cardinal_index % DIRECTIONS.size]
+    DIRECTIONS[@cardinal % DIRECTIONS.size]
   end
 
   def turn_left
-    @cardinal_index -= 1 
+    @cardinal -= 1 
   end
 
   def turn_right
-    @cardinal_index += 1
+    @cardinal += 1
   end
 
   def forward
@@ -41,10 +44,5 @@ class Locator
 
   def current_location
     "#{@x} #{@y} #{current_direction}"
-  end
-
-  def receive(coords)
-    @x, @y = coords[:x], coords [:y]
-    cardinal_index(coords)
   end
 end

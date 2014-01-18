@@ -1,14 +1,10 @@
 require 'spec_helper'
 
 describe Locator do
-  let(:coords) { { x: 5, y: 5, cardinal: 'N' } }
-  let(:north_facing_locator) { Locator.new(coords) }
-  let(:south_coords) { { x: 5, y: 5, cardinal: 'S' } }
-  let(:south_facing_locator) { Locator.new(south_coords) }
-  let(:east_coords) { { x:5, y: 5, cardinal: 'E' } }
-  let(:east_facing_locator) { Locator.new(east_coords) }
-  let(:west_coords) { { x: 5, y: 5, cardinal: 'W' } }
-  let(:west_facing_locator) { Locator.new(west_coords) }
+  let(:north_facing_locator) { Locator.new(coords('N')) }
+  let(:south_facing_locator) { Locator.new(coords('S')) }
+  let(:east_facing_locator) { Locator.new(coords('E')) }
+  let(:west_facing_locator) { Locator.new(coords('W')) }
 
   context 'turning left and right' do
     it 'knows it is facing north' do
@@ -117,16 +113,14 @@ describe Locator do
   context 'assigns coords' do
     it 'reassign coords when given new coords' do
       expect(north_facing_locator.current_location).to eq '5 5 N'
-      new_coords = { x: 2, y: 2, cardinal: 'N' }
-      north_facing_locator.receive(new_coords)
+      north_facing_locator.set(new_position([2,2,'N']))
 
       expect(north_facing_locator.current_location).to eq '2 2 N'
     end
   end
 
   context 'receives series of commands' do
-    let(:coords) { { x: 5, y: 5, cardinal: 'N' } }
-    let(:locator) { Locator.new(coords) }
+    let(:locator) { Locator.new(coords('N')) }
 
     it 'should arrive at "4 6 N"' do
       locator.turn_left
@@ -136,5 +130,13 @@ describe Locator do
 
       expect(locator.current_location).to eq '4 6 N'
     end
+  end
+
+  def coords(direction)
+    { x: 5, y: 5, cardinal: direction }
+  end
+
+  def new_position(coords)
+    { x: coords[0], y: coords[1], cardinal: coords[2] }
   end
 end
