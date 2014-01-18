@@ -24,10 +24,24 @@ describe Rover do
     end
   end
 
-  it 'can move right' do
-    test_rover.move('0 0 N', 'R')
+  context 'turning right' do
+    it 'should be facing east' do
+      test_rover.move('0 0 N', 'R')
 
-    expect(test_rover.current_location).to eq '0 0 E'
+      expect(test_rover.current_location).to eq '0 0 E'
+    end
+
+    it 'should be facing west' do
+      test_rover.move('0 0 N', 'RRR')
+
+      expect(test_rover.current_location).to eq '0 0 W'
+    end
+
+    it 'should be facing south' do
+      test_rover.move('0 0 N', 'RRRRRRRRRR')
+
+      expect(test_rover.current_location).to eq '0 0 S'
+    end
   end
 
   it 'can move forward' do
