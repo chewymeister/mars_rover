@@ -2,13 +2,8 @@ class Locator
   ONE_STEP_IN = { 'N' => 1, 'S' => -1, 'E' => 1, 'W' => -1 }
   DIRECTIONS = ['N','E','S','W']
 
-  def card_index
-    @cardinal_index
-  end
-
   def initialize(coords)
-    @x = coords[:x]
-    @y = coords[:y]
+    @x, @y = coords[:x], coords[:y]
     cardinal_index(coords)
   end
 
@@ -17,7 +12,7 @@ class Locator
   end
 
   def current_direction
-    DIRECTIONS[@cardinal_index%DIRECTIONS.size]
+    DIRECTIONS[@cardinal_index % DIRECTIONS.size]
   end
 
   def turn_left

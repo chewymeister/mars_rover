@@ -6,7 +6,7 @@ class Rover
   end
 
   def move(coords, command)
-    give_locator(coords)
+    give_locator(coords) 
     determine_path_from(command)
   end
 
