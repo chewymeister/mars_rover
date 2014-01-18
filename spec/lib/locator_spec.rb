@@ -130,6 +130,29 @@ describe Locator do
 
       expect(locator.current_location).to eq '4 6 N'
     end
+
+    context 'cannot travel outside the boundaries' do
+      it 'should not travel past zero on y axis' do
+        2.times { locator.turn_left }
+        10.times { locator.forward }
+
+        expect(locator.current_location).to eq '5 0 S'
+      end
+
+      it 'should not travel past zero on x axis' do
+        locator.turn_left
+        10.times { locator.forward }
+
+        expect(locator.current_location).to eq '0 5 W'
+      end
+
+      it 'should not travel past upper boundary of 10 on x axis' do
+        locator.turn_left
+        10.times { locator.forward }
+
+        expect(locator.current_location).to eq '0 5 W'
+      end
+    end
   end
 
   def coords(direction)

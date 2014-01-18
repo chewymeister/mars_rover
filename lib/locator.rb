@@ -31,10 +31,26 @@ class Locator
   end
 
   def move_horizontally
+    take_step_along_x unless outside_x_boundaries
+  end
+
+  def outside_x_boundaries
+    @x == 0 
+  end
+
+  def take_step_along_x
     @x += ONE_STEP_IN[current_direction]
   end
 
   def move_vertically
+    take_step_along_y unless outside_y_boundaries
+  end
+
+  def outside_y_boundaries
+    @y == 0 
+  end
+
+  def take_step_along_y
     @y += ONE_STEP_IN[current_direction]
   end
 
