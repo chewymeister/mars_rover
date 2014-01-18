@@ -1,10 +1,13 @@
 require 'spec_helper'
+def boundaries(coords)
+  { upper_x: coords[0], upper_y: coords[1] }
+end
 
 describe Locator do
-  let(:north_facing_locator) { Locator.new(coords('N')) }
-  let(:south_facing_locator) { Locator.new(coords('S')) }
-  let(:east_facing_locator) { Locator.new(coords('E')) }
-  let(:west_facing_locator) { Locator.new(coords('W')) }
+  let(:north_facing_locator) { Locator.new(coords('N'), boundaries([10,10])) }
+  let(:south_facing_locator) { Locator.new(coords('S'), boundaries([10,10])) }
+  let(:east_facing_locator) { Locator.new(coords('E'), boundaries([10,10])) }
+  let(:west_facing_locator) { Locator.new(coords('W'), boundaries([10,10])) }
 
   context 'turning left and right' do
     it 'knows it is facing north' do
@@ -120,7 +123,7 @@ describe Locator do
   end
 
   context 'receives series of commands' do
-    let(:locator) { Locator.new(coords('N')) }
+    let(:locator) { Locator.new(coords('N'), boundaries([10,10])) }
 
     it 'should arrive at "4 6 N"' do
       locator.turn_left
@@ -146,7 +149,13 @@ describe Locator do
         expect(locator.current_location).to eq '0 5 W'
       end
 
-      #TODO upper boundary
+      it 'should not travel past upper boundary on x axis' do
+        locator.turn_right
+        20.times { locator.forward }
+
+        expect(locator.current_location).to eq '10 5 E'
+      end
+
     end
   end
 

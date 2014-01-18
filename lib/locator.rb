@@ -2,8 +2,12 @@ class Locator
   ONE_STEP_IN = { 'N' => 1, 'S' => -1, 'E' => 1, 'W' => -1 }
   DIRECTIONS = ['N','E','S','W']
 
-  def initialize(coords)
-    set(coords)
+  def initialize(coords, boundaries)
+    set(coords) & lay(boundaries)
+  end
+
+  def lay(boundaries)
+    @upper_x, @upper_y = boundaries[:upper_x], boundaries[:upper_y]
   end
 
   def set(coords)
@@ -35,7 +39,7 @@ class Locator
   end
 
   def outside_x_boundaries
-    @x == 0 
+    @x == 0 || @x >= @upper_x
   end
 
   def take_step_along_x
@@ -47,7 +51,7 @@ class Locator
   end
 
   def outside_y_boundaries
-    @y == 0 
+    @y == 0 || @y >= @upper_x
   end
 
   def take_step_along_y
