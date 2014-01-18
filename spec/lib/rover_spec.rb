@@ -46,19 +46,19 @@ describe Rover do
 
   context 'moving forward' do
     it 'should have moved north by one' do
-      test_rover.move('0 0 N', 'F')
+      test_rover.move('0 0 N', 'M')
 
       expect(test_rover.current_location).to eq '0 1 N'
     end
 
     it 'should have moved east by one' do
-      test_rover.move('0 0 E', 'FF')
+      test_rover.move('0 0 E', 'MM')
 
       expect(test_rover.current_location).to eq '2 0 E'
     end
 
     it 'should have moved south by one' do
-      test_rover.move('5 5 S', 'FFF')
+      test_rover.move('5 5 S', 'MMM')
 
       expect(test_rover.current_location).to eq '5 2 S'
     end
@@ -66,14 +66,14 @@ describe Rover do
 
   context 'can take multiple commands' do
     it 'simple commands' do
-      command = 'LRLFFLF'
+      command = 'LRLMMLM'
       test_rover.move('4 4 N', command)
 
       expect(test_rover.current_location).to eq '2 3 S'
     end
 
     it 'commands that lead the rover to the edge' do
-      command = 'LRLFFFFFFFFFFFFLFFFFFFFFFRFFLLFFFLFFR'
+      command = 'LRLMMMMMMMMMMMLMMMMMMMMMRMMLLMMMLMMR'
       test_rover.move('4 4 N', command)
 
       expect(test_rover.current_location).to eq '3 2 E'

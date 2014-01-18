@@ -3,7 +3,8 @@ class Locator
   CARDINAL_REFERENCE = ['N','E','S','W']
 
   def initialize(coords, boundaries)
-    set(coords) & lay(boundaries)
+    set(coords) 
+    lay(boundaries)
   end
 
   def turn_left

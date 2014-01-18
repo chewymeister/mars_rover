@@ -1,8 +1,8 @@
 class Rover
   FACING = { 'L' => -1, 'R' => 1 }
   
-  def initialize(boundaries)
-    @boundaries = boundaries
+  def initialize(boundaries_hash)
+    @boundaries = boundaries_hash
   end
 
   def current_location
