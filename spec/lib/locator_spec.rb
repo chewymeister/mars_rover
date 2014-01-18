@@ -146,12 +146,7 @@ describe Locator do
         expect(locator.current_location).to eq '0 5 W'
       end
 
-      it 'should not travel past upper boundary of 10 on x axis' do
-        locator.turn_left
-        10.times { locator.forward }
-
-        expect(locator.current_location).to eq '0 5 W'
-      end
+      #TODO upper boundary
     end
   end
 
