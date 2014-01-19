@@ -6,6 +6,15 @@ class StringManipulator
     @input_string = process(input_string)
   end
 
+  def output
+    {
+      boundaries: set_boundaries,
+      instructions: set_instructions
+    }
+  end
+  
+  private
+
   def set_instructions
     contains_instructions? ? provide_instructions : ''
   end
@@ -16,13 +25,6 @@ class StringManipulator
 
   def sentence_list_from(string)
     string.split("\n")
-  end
-
-  def output
-    {
-      boundaries: set_boundaries,
-      instructions: set_instructions
-    }
   end
 
   def contains_instructions?
@@ -37,8 +39,8 @@ class StringManipulator
     @input_string.reject { |string| string =~ BOUNDARY}
   end
 
-  def extract_instructions(set)
-    set.each_slice(2).inject([]) do |list, pair|
+  def extract_instructions(instructions)
+    instructions.each_slice(2).inject([]) do |list, pair|
       list << {
         :commands => extract_commands_from(pair),
         :coords => extract_coords_from(pair)
@@ -46,28 +48,28 @@ class StringManipulator
     end
   end
 
-  def extract_commands_from(set)
-    set.select { |string| string =~ INSTRUCTION }.first
+  def extract_commands_from(pair)
+    pair.select { |string| string =~ INSTRUCTION }.first
   end
 
-  def extract_coords_from(set)
-    create_coords_using(coord_containing(set))
+  def extract_coords_from(pair)
+    create_coords_using(coord_containing(pair))
   end
 
-  def coord_containing(set)
-    set.reject { |string| string =~ INSTRUCTION }.first
+  def coord_containing(pair)
+    pair.reject { |string| string =~ INSTRUCTION }.first
   end
 
-  def create_coords_using(string)
+  def create_coords_using(coords)
     {
-      x: coords_from(string,0), 
-      y: coords_from(string,1), 
-      cardinal: word_list_from(string)[2]
+      x: coords_from(coords,0), 
+      y: coords_from(coords,1), 
+      cardinal: word_list_from(coords)[2]
     }
   end
 
-  def coords_from(string, index)
-    word_list_from(string)[index].to_i
+  def coords_from(coords, index)
+    word_list_from(coords)[index].to_i
   end
 
   def set_boundaries
