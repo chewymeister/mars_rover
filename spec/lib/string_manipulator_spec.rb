@@ -32,24 +32,49 @@ describe StringManipulator do
   end
 
   context 'extracts the instructions' do
-    context 'should identify the starting coordinates' do
-      let(:string) do
-        <<-eos
-        20 20
-        0 1 N
-        F
-        eos
+    context 'identifies the starting coordinates' do
+      context 'are 0 1 N' do
+        let(:string) do
+          <<-eos
+            20 20
+            0 1 N
+            F
+          eos
+        end
+
+        it 'with the x coord being 0' do
+          manipulator = StringManipulator.new(string)
+
+          expect(manipulator.output[:instructions][:coords][:x]).to eq 0
+        end
+
+        it 'with the y coord being 0' do
+          manipulator = StringManipulator.new(string)
+
+          expect(manipulator.output[:instructions][:coords][:y]).to eq 1
+        end
       end
-      it 'with the x coord being 0' do
-        manipulator = StringManipulator.new(string)
 
-        expect(manipulator.output[:instructions][:coordinates][:x]).to eq 0
-      end
+      context 'are 5 5 S' do
+        let(:string) do
+          <<-eos
+            20 20
+            5 6 S
+            F
+          eos
+        end
 
-      it 'with the y coord being 0' do
-        manipulator = StringManipulator.new(string)
+        it 'with the x coord being 0' do
+          manipulator = StringManipulator.new(string)
 
-        expect(manipulator.output[:instructions][:coordinates][:y]).to eq 1
+          expect(manipulator.output[:instructions][:coords][:x]).to eq 5
+        end
+
+        it 'with the y coord being 0' do
+          manipulator = StringManipulator.new(string)
+
+          expect(manipulator.output[:instructions][:coords][:y]).to eq 6
+        end
       end
     end
   end

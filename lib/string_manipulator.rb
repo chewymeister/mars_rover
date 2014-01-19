@@ -1,6 +1,7 @@
 class StringManipulator
   def initialize(input_string)
     @input_string = process(input_string)
+    @instructions = {}
   end
   
   def process(input_string)
@@ -18,28 +19,35 @@ class StringManipulator
   def output_with_boundaries
     {
       boundaries: provide_boundaries,
-      instructions: provide_instructions
+      instructions: contains_instructions? ? provide_instructions : ''
     }
+  end
+
+  def contains_instructions?
+    @input_string.any? { |string| string =~ /^\D+\w+$/ }
+  end
+
+  def output_without_boundaries
+    { instructions: provide_instructions }
   end
 
   def provide_instructions
-    {
-      coordinates: provide_coordinates
-    }
+    contains_boundaries? ? extract_instructions(@input_string.drop(1)): extract_instructions(@input_string)
   end
 
-  def provide_coordinates
-    { x: 0, y: 1, cardinal: 'N' }
+  def extract_instructions(set)
+      {
+        :command => set.select { |string| string =~ /^\D+\w+$/ }.first.strip,
+        :coords => provide_coords(set.reject { |string| string =~ /^\D+\w+$/ }.first.strip)
+      }
+  end
+  
+  def provide_coords(string)
+    { x: list_of(string)[0].to_i, y: list_of(string)[1].to_i, cardinal: list_of(string)[2].to_i }   
   end
 
   def provide_boundaries
     { upper_x: upper_x, upper_y: upper_y }
-  end
-
-  def output_without_boundaries
-    {
-      instruction: {}
-    }
   end
 
   def upper_x
