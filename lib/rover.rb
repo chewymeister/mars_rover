@@ -4,7 +4,7 @@ class Rover
   def initialize(input)
     @boundaries = input[:boundaries]
     give_locator(coords_from(input[:instructions])) 
-    determine_path_from(commands_from(input[:instructions]))
+    determine_path_using(commands_from(input[:instructions]))
   end
 
   def current_location
@@ -25,7 +25,7 @@ class Rover
     @locator = Locator.new(coords, @boundaries)
   end
 
-  def determine_path_from(commands)
+  def determine_path_using(commands)
     separate(commands).each { |direction| choose(direction) }
   end
 
