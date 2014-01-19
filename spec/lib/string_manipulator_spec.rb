@@ -53,6 +53,12 @@ describe StringManipulator do
 
           expect(manipulator.output[:instructions][:coords][:y]).to eq 1
         end
+
+        it 'with the cardinal coord being "N"' do
+          manipulator = StringManipulator.new(string)
+
+          expect(manipulator.output[:instructions][:coords][:cardinal]).to eq 'N'
+        end
       end
 
       context 'are 5 5 S' do
@@ -75,8 +81,37 @@ describe StringManipulator do
 
           expect(manipulator.output[:instructions][:coords][:y]).to eq 6
         end
+
+        it 'with the cardinal coord being "S"' do
+          manipulator = StringManipulator.new(string)
+
+          expect(manipulator.output[:instructions][:coords][:cardinal]).to eq 'S'
+        end
+      end
+    end
+
+    context 'extracts the commands' do
+      it 'as FFF' do
+        string = <<-eos
+            20 20
+            5 6 S
+            MMM
+        eos
+        manipulator = StringManipulator.new(string)
+
+        expect(manipulator.output[:instructions][:commands]).to eq 'MMM'
+      end
+
+      it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
+        string = <<-eos
+            20 20
+            5 6 S
+            LMLMLMLMLRRLMLMRLRLRLRLMLR
+        eos
+        manipulator = StringManipulator.new(string)
+
+        expect(manipulator.output[:instructions][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
       end
     end
   end
-
 end

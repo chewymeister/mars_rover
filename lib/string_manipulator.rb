@@ -37,13 +37,13 @@ class StringManipulator
 
   def extract_instructions(set)
       {
-        :command => set.select { |string| string =~ /^\D+\w+$/ }.first.strip,
+        :commands => set.select { |string| string =~ /^\D+\w+$/ }.first.strip,
         :coords => provide_coords(set.reject { |string| string =~ /^\D+\w+$/ }.first.strip)
       }
   end
   
   def provide_coords(string)
-    { x: list_of(string)[0].to_i, y: list_of(string)[1].to_i, cardinal: list_of(string)[2].to_i }   
+    { x: list_of(string)[0].to_i, y: list_of(string)[1].to_i, cardinal: list_of(string)[2] }   
   end
 
   def provide_boundaries
