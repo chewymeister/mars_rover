@@ -9,10 +9,10 @@ describe StringManipulator do
         expect(manipulator.output[:boundaries][:upper_x]).to eq 10
       end
 
-      it 'as 20' do
-        manipulator = StringManipulator.new('20 20')
+      it 'as 2000' do
+        manipulator = StringManipulator.new('1000 2000')
 
-        expect(manipulator.output[:boundaries][:upper_x]).to eq 20
+        expect(manipulator.output[:boundaries][:upper_x]).to eq 1000
       end
     end
 
@@ -23,10 +23,10 @@ describe StringManipulator do
         expect(manipulator.output[:boundaries][:upper_y]).to eq 10
       end
 
-      it 'as 20' do
-        manipulator = StringManipulator.new('20 20')
+      it 'as 2000' do
+        manipulator = StringManipulator.new('2000 2000')
 
-        expect(manipulator.output[:boundaries][:upper_y]).to eq 20
+        expect(manipulator.output[:boundaries][:upper_y]).to eq 2000
       end
     end
   end
