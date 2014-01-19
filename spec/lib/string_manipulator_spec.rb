@@ -38,26 +38,26 @@ describe StringManipulator do
           <<-eos
             20 20
             0 1 N
-            F
+            M
           eos
         end
 
         it 'with the x coord being 0' do
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:coords][:x]).to eq 0
+          expect(manipulator.output[:instructions][0][:coords][:x]).to eq 0
         end
 
         it 'with the y coord being 0' do
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:coords][:y]).to eq 1
+          expect(manipulator.output[:instructions][0][:coords][:y]).to eq 1
         end
 
         it 'with the cardinal coord being "N"' do
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:coords][:cardinal]).to eq 'N'
+          expect(manipulator.output[:instructions][0][:coords][:cardinal]).to eq 'N'
         end
       end
 
@@ -66,26 +66,26 @@ describe StringManipulator do
           <<-eos
             20 20
             5 6 S
-            F
+            M
           eos
         end
 
         it 'with the x coord being 0' do
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:coords][:x]).to eq 5
+          expect(manipulator.output[:instructions][0][:coords][:x]).to eq 5
         end
 
         it 'with the y coord being 0' do
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:coords][:y]).to eq 6
+          expect(manipulator.output[:instructions][0][:coords][:y]).to eq 6
         end
 
         it 'with the cardinal coord being "S"' do
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:coords][:cardinal]).to eq 'S'
+          expect(manipulator.output[:instructions][0][:coords][:cardinal]).to eq 'S'
         end
       end
     end
@@ -100,7 +100,7 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:commands]).to eq 'MMM'
+          expect(manipulator.output[:instructions][0][:commands]).to eq 'MMM'
         end
 
         it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
@@ -111,9 +111,10 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
+          expect(manipulator.output[:instructions][0][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
         end
       end
+
       context 'without a string that contains boundaries' do
         it 'as MMM' do
           string = <<-eos
@@ -122,7 +123,7 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:commands]).to eq 'MMM'
+          expect(manipulator.output[:instructions][0][:commands]).to eq 'MMM'
         end
 
         it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
@@ -132,9 +133,29 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
+          expect(manipulator.output[:instructions][0][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
         end
       end
+    end
+  end
+  context 'handles multiple commands' do
+    let(:string) do
+      <<-eos
+        5 6 S
+        M
+        7 7 N
+        LMRMLLM
+      eos
+    end
+
+    it 'will have two sets of instructions' do
+      manipulator = StringManipulator.new(string)
+
+      first_result = { coords: { x: 5, y: 6, cardinal: 'S' }, commands: 'M' }
+      second_result = { coords: { x: 7, y: 7, cardinal: 'N' }, commands: 'LMRMLLM' }
+      expect(manipulator.output[:instructions].first).to eq first_result
+      expect(manipulator.output[:instructions].last).to eq second_result
+      expect(manipulator.output[:boundaries].empty?).to be_true
     end
   end
 end
