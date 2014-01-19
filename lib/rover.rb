@@ -9,15 +9,22 @@ class Rover
     @locator.current_location
   end
 
-  def move(coords, command)
-    give_locator(coords) 
-    determine_path_from(command)
+  def move_using(instructions)
+    give_locator(coords_from(instructions)) 
+    determine_path_from(commands_from(instructions))
   end
 
   private
+  def commands_from(instructions)
+    instructions[:commands] 
+  end
+
+  def coords_from(instructions)
+    instructions[:coords]
+  end
 
   def give_locator(coords)
-    @locator = Locator.new(processed(coords), @boundaries)
+    @locator = Locator.new(coords, @boundaries)
   end
 
   def processed(coords)
