@@ -1,5 +1,5 @@
 require 'rspec'
 require './lib/rover'
-require './lib/interface'
+require './lib/rover_interface'
 require './lib/locator'
 require './lib/string_manipulator'
