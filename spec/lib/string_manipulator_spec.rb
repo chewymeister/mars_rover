@@ -2,33 +2,34 @@ require 'spec_helper'
 
 describe StringManipulator do
   context 'extracts the boundary' do
-    context 'of value 10 10' do
+    context 'where x is 10, y is 10' do
       let(:manipulator) { StringManipulator.new('10 10') }
 
       it 'upper_x is 10' do
-        expect(manipulator.output[:boundaries][:upper_x]).to eq 10
+        expect(boundaries_from(manipulator)[:upper_x]).to eq 10
       end
 
       it 'upper_y is 10' do
-        expect(manipulator.output[:boundaries][:upper_y]).to eq 10
+        expect(boundaries_from(manipulator)[:upper_y]).to eq 10
       end
     end
 
-    context 'of value 2000 2000' do
+    context 'where x is 2000, y is 2000' do
       let(:manipulator) { StringManipulator.new('2000 2000') }
+
       it 'upper_x is 2000' do
-        expect(manipulator.output[:boundaries][:upper_x]).to eq 2000
+        expect(boundaries_from(manipulator)[:upper_x]).to eq 2000
       end
 
       it 'upper_y is 2000' do
-        expect(manipulator.output[:boundaries][:upper_y]).to eq 2000
+        expect(boundaries_from(manipulator)[:upper_y]).to eq 2000
       end
     end
   end
 
   context 'extracts the instructions' do
     context 'identifies the starting coordinates' do
-      context 'are 0 1 N' do
+      context 'as 0 1 N' do
         let(:string) do
           <<-eos
             20 20
@@ -39,19 +40,19 @@ describe StringManipulator do
         let(:manipulator) { StringManipulator.new(string) }
 
         it 'with the x coord being 0' do
-          expect(manipulator.output[:instructions][0][:coords][:x]).to eq 0
+          expect(coords_from(manipulator)[:x]).to eq 0
         end
 
         it 'with the y coord being 0' do
-          expect(manipulator.output[:instructions][0][:coords][:y]).to eq 1
+          expect(coords_from(manipulator)[:y]).to eq 1
         end
 
         it 'with the cardinal coord being "N"' do
-          expect(manipulator.output[:instructions][0][:coords][:cardinal]).to eq 'N'
+          expect(coords_from(manipulator)[:cardinal]).to eq 'N'
         end
       end
 
-      context 'are 5 5 S' do
+      context 'as 5 5 S' do
         let(:string) do
           <<-eos
             20 20
@@ -61,16 +62,16 @@ describe StringManipulator do
         end
         let(:manipulator) { StringManipulator.new(string) }
 
-        it 'with the x coord being 0' do
-          expect(manipulator.output[:instructions][0][:coords][:x]).to eq 5
+        it 'with the x coord being 5' do
+          expect(coords_from(manipulator)[:x]).to eq 5
         end
 
-        it 'with the y coord being 0' do
-          expect(manipulator.output[:instructions][0][:coords][:y]).to eq 6
+        it 'with the y coord being 6' do
+          expect(coords_from(manipulator)[:y]).to eq 6
         end
 
         it 'with the cardinal coord being "S"' do
-          expect(manipulator.output[:instructions][0][:coords][:cardinal]).to eq 'S'
+          expect(coords_from(manipulator)[:cardinal]).to eq 'S'
         end
       end
     end
@@ -85,7 +86,7 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][0][:commands]).to eq 'MMM'
+          expect(commands_from(manipulator)).to eq 'MMM'
         end
 
         it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
@@ -96,7 +97,7 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][0][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
+          expect(commands_from(manipulator)).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
         end
       end
 
@@ -108,7 +109,7 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][0][:commands]).to eq 'MMM'
+          expect(commands_from(manipulator)).to eq 'MMM'
         end
 
         it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
@@ -118,7 +119,7 @@ describe StringManipulator do
           eos
           manipulator = StringManipulator.new(string)
 
-          expect(manipulator.output[:instructions][0][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
+          expect(commands_from(manipulator)).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
         end
       end
     end
@@ -145,5 +146,17 @@ describe StringManipulator do
     it 'second set of instructions should equal second result' do
       expect(manipulator.output[:instructions].last).to eq second_result
     end
+  end
+
+  def commands_from(manipulator)
+    manipulator.output[:instructions][0][:commands]
+  end
+
+  def boundaries_from(manipulator)
+    manipulator.output[:boundaries]
+  end
+
+  def coords_from(manipulator)
+    manipulator.output[:instructions][0][:coords]
   end
 end

@@ -4,7 +4,10 @@ class StringManipulator
 
   def initialize(input_string)
     @input_string = process(input_string)
-    @list_of_instructions = contains_instructions? ? provide_instructions : ''
+  end
+
+  def set_instructions
+    contains_instructions? ? provide_instructions : ''
   end
 
   def process(string)
@@ -17,8 +20,8 @@ class StringManipulator
 
   def output
     {
-      boundaries: provide_boundaries,
-      instructions: @list_of_instructions 
+      boundaries: set_boundaries,
+      instructions: set_instructions
     }
   end
 
@@ -67,7 +70,7 @@ class StringManipulator
     word_list_from(string)[index].to_i
   end
 
-  def provide_boundaries
+  def set_boundaries
     contains_boundaries? ? define_boundaries : @boundaries ||= ''
   end
 
