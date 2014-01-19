@@ -17,9 +17,23 @@ class StringManipulator
 
   def output_with_boundaries
     {
-      boundaries: { upper_x: upper_x, upper_y: upper_y },
-      instructions: {}
+      boundaries: provide_boundaries,
+      instructions: provide_instructions
     }
+  end
+
+  def provide_instructions
+    {
+      coordinates: provide_coordinates
+    }
+  end
+
+  def provide_coordinates
+    { x: 0, y: 1, cardinal: 'N' }
+  end
+
+  def provide_boundaries
+    { upper_x: upper_x, upper_y: upper_y }
   end
 
   def output_without_boundaries
@@ -44,4 +58,3 @@ class StringManipulator
     string.split(' ')
   end
 end
-
