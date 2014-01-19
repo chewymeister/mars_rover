@@ -14,6 +14,17 @@ describe RoverInterface do
 
       expect(interface.output).to eq '0 0 W' 
     end
+
+    it 'should have an output of "0 0 E"' do
+      input = <<-eos
+      20 20
+      0 0 N
+      R
+      eos
+      interface.receive(input)
+
+      expect(interface.output).to eq '0 0 E' 
+    end
   end
 end
 
