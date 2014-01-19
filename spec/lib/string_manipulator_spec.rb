@@ -91,26 +91,49 @@ describe StringManipulator do
     end
 
     context 'extracts the commands' do
-      it 'as FFF' do
-        string = <<-eos
+      context 'with a string that contains boundaries' do
+        it 'as MMM' do
+          string = <<-eos
             20 20
             5 6 S
             MMM
-        eos
-        manipulator = StringManipulator.new(string)
+          eos
+          manipulator = StringManipulator.new(string)
 
-        expect(manipulator.output[:instructions][:commands]).to eq 'MMM'
-      end
+          expect(manipulator.output[:instructions][:commands]).to eq 'MMM'
+        end
 
-      it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
-        string = <<-eos
+        it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
+          string = <<-eos
             20 20
             5 6 S
             LMLMLMLMLRRLMLMRLRLRLRLMLR
-        eos
-        manipulator = StringManipulator.new(string)
+          eos
+          manipulator = StringManipulator.new(string)
 
-        expect(manipulator.output[:instructions][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
+          expect(manipulator.output[:instructions][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
+        end
+      end
+      context 'without a string that contains boundaries' do
+        it 'as MMM' do
+          string = <<-eos
+            5 6 S
+            MMM
+          eos
+          manipulator = StringManipulator.new(string)
+
+          expect(manipulator.output[:instructions][:commands]).to eq 'MMM'
+        end
+
+        it 'as LMLMLMLMLRRLMLMRLRLRLRLMLR' do
+          string = <<-eos
+            5 6 S
+            LMLMLMLMLRRLMLMRLRLRLRLMLR
+          eos
+          manipulator = StringManipulator.new(string)
+
+          expect(manipulator.output[:instructions][:commands]).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
+        end
       end
     end
   end

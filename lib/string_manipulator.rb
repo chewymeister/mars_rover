@@ -1,7 +1,6 @@
 class StringManipulator
   def initialize(input_string)
     @input_string = process(input_string)
-    @instructions = {}
   end
   
   def process(input_string)
