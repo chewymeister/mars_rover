@@ -41,7 +41,7 @@ class Rover
     direction == 'L' || direction == 'R'
   end
 
-  def separate(command)
-    command.chars
+  def separate(commands)
+    commands.chars
   end
 end
