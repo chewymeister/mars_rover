@@ -112,7 +112,7 @@ describe Locator do
   context 'receives series of commands' do
     let(:locator) { Locator.new(coords('N'), boundaries([10,10])) }
 
-    it 'should arrive at "4 6 N"' do
+    it 'current location should be "4 6 N"' do
       locator.turn_left
       locator.forward
       locator.turn_right
@@ -122,28 +122,28 @@ describe Locator do
     end
 
     context 'cannot travel outside the boundaries' do
-      it 'should not travel past zero on y axis' do
+      it 'current location should be "5 0 S", does not travel past zero on y axis' do
         2.times { locator.turn_left }
         10.times { locator.forward }
 
         expect(locator.current_location).to eq '5 0 S'
       end
 
-      it 'should not travel past zero on x axis' do
+      it 'current location should be "0 5 W", does not travel past zero on x axis' do
         locator.turn_left
         10.times { locator.forward }
 
         expect(locator.current_location).to eq '0 5 W'
       end
 
-      it 'should not travel past upper boundary on x axis' do
+      it 'current location should be "10 5 E", does not travel past upper x boundary' do
         locator.turn_right
         20.times { locator.forward }
 
         expect(locator.current_location).to eq '10 5 E'
       end
 
-      it 'should resume travel after hitting a boundary' do
+      it 'current location should be "6 5 W", resumes travel after hitting a boundary' do
         locator.turn_right
         20.times { locator.forward }
         2.times { locator.turn_left }

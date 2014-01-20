@@ -51,7 +51,7 @@ describe InputProcessor do
           expect(coords_from(manipulator)[:x]).to eq 0
         end
 
-        it 'with the y coord being 0' do
+        it 'with the y coord being 1' do
           expect(coords_from(manipulator)[:y]).to eq 1
         end
 
@@ -60,7 +60,7 @@ describe InputProcessor do
         end
       end
 
-      context 'as 5 5 S' do
+      context 'as 5 6 S' do
         input = <<-eos
           20 20
           5 6 S
