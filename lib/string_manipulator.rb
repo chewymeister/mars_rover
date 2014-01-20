@@ -1,7 +1,4 @@
 class StringManipulator
-  BOUNDARY = /^(\d+)\s(\d+)$/
-  COMMAND = /^\w+$/
-
   def initialize(input_string)
     @input_string = process(input_string)
   end
@@ -12,10 +9,6 @@ class StringManipulator
   
   private
 
-  def set_instructions
-    contains_instructions? ? provide_instructions : ''
-  end
-
   def process(string)
     sentence_list_from(string).map(&:strip)
   end
@@ -24,47 +17,46 @@ class StringManipulator
     string.split("\n")
   end
 
-  def contains_instructions?
-    @input_string.any? { |string| string =~ COMMAND }
+  def set_instructions
+    extract_boundaries_using(input_without_boundaries)
   end
 
-  def provide_instructions
-    extract_instructions(without_boundaries)
+  def input_without_boundaries
+    @input_string.drop(1)
   end
 
-  def without_boundaries
-    @input_string.reject { |string| string =~ BOUNDARY}
-  end
-
-  def extract_instructions(commands_and_coords)
+  def extract_boundaries_using(commands_and_coords)
     paired_up(commands_and_coords).inject([]) do |list_of_instructions, pair|
-      list_of_instructions << {
-        :commands => extract_commands_from(pair),
-        :coords => extract_coords_from(pair)
-      }
+      list_of_instructions << hash_of_coords_and_commands_from(pair)
     end
+  end
+
+  def hash_of_coords_and_commands_from(pair)
+    { :coords => create_coords_using(pair.first), :commands => pair.last }
   end
 
   def paired_up(commands_and_coords)
     commands_and_coords.each_slice(2)
   end
 
-  def extract_commands_from(pair)
-    pair.select { |string| string =~ COMMAND }.first
-  end
-
-  def extract_coords_from(pair)
-    create_coords_using(coords_string_from(pair))
-  end
-
-  def coords_string_from(pair)
-    pair.reject { |string| string =~ COMMAND }.first
-  end
-
-  def create_coords_using(string)
-    {
-      x: coords_from(string,0), y: coords_from(string,1), cardinal: words_from(string)[2]
+  def create_coords_using(coords_string)
+    { 
+      x: first_number_from(coords_string), 
+      y: second_number_from(coords_string), 
+      cardinal: last_letter_from(coords_string)
     }
+  end
+
+  def first_number_from(string)
+    coords_from(string,0)
+  end
+
+  def second_number_from(string)
+    coords_from(string,1)
+  end
+
+  def last_letter_from(string)
+    words_from(string).last
   end
 
   def coords_from(coords, index)
@@ -72,15 +64,7 @@ class StringManipulator
   end
 
   def set_boundaries
-    contains_boundaries? ? define_boundaries : @boundaries ||= ''
-  end
-
-  def define_boundaries
-    @boundaries = { upper_x: upper_x, upper_y: upper_y }
-  end
-
-  def contains_boundaries?
-    @input_string.first =~ BOUNDARY
+    { upper_x: upper_x, upper_y: upper_y }
   end
 
   def upper_x
