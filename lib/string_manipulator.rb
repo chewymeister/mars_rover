@@ -18,14 +18,14 @@ class StringManipulator
   end
 
   def set_instructions
-    extract_boundaries_using(input_without_boundaries)
+    extract_instructions_using(input_without_boundaries)
   end
 
   def input_without_boundaries
     @input_string.drop(1)
   end
 
-  def extract_boundaries_using(commands_and_coords)
+  def extract_instructions_using(commands_and_coords)
     paired_up(commands_and_coords).inject([]) do |list_of_instructions, pair|
       list_of_instructions << hash_of_coords_and_commands_from(pair)
     end
