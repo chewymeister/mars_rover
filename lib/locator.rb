@@ -23,11 +23,11 @@ class Locator
     "#{@x} #{@y} #{current_direction}"
   end
 
+  private
+
   def set(coords)
     @x, @y, @cardinal = coords[:x], coords [:y], cardinal_to_integer(coords)
   end
-
-  private
 
   def lay(boundaries)
     @upper_x, @upper_y = boundaries[:upper_x], boundaries[:upper_y]

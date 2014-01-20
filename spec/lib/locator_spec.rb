@@ -109,15 +109,6 @@ describe Locator do
     end
   end
 
-  context 'assigns coords' do
-    it 'reassign coords when given new coords' do
-      expect(north_facing_locator.current_location).to eq '5 5 N'
-      north_facing_locator.set(new_position([2,2,'N']))
-
-      expect(north_facing_locator.current_location).to eq '2 2 N'
-    end
-  end
-
   context 'receives series of commands' do
     let(:locator) { Locator.new(coords('N'), boundaries([10,10])) }
 
