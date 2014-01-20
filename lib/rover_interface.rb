@@ -1,6 +1,6 @@
 class RoverInterface
-  def receive(input)
-    @processor = StringManipulator.new(input)
+  def receive(input_as_string)
+    @processor = InputProcessor.new(input_as_string)
     @data = @processor.output
   end
 

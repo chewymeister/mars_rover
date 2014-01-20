@@ -1,4 +1,4 @@
-class StringManipulator
+class InputProcessor
   def initialize(input_string)
     @input_string = process(input_string)
   end
