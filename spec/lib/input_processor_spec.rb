@@ -8,7 +8,7 @@ describe InputProcessor do
         0 0 N
         M
       eos
-      let(:manipulator) { InputProcessor.new(input) }
+      let(:manipulator) { InputProcessor.process(input) }
 
       it 'upper_x is 10' do
         expect(boundaries_from(manipulator)[:upper_x]).to eq 10
@@ -25,7 +25,7 @@ describe InputProcessor do
         0 0 N
         M
       eos
-      let(:manipulator) { InputProcessor.new(input) }
+      let(:manipulator) { InputProcessor.process(input) }
 
       it 'upper_x is 2000' do
         expect(boundaries_from(manipulator)[:upper_x]).to eq 2000
@@ -45,7 +45,7 @@ describe InputProcessor do
           0 1 N
           M
         eos
-        let(:manipulator) { InputProcessor.new(input) }
+        let(:manipulator) { InputProcessor.process(input) }
 
         it 'with the x coord being 0' do
           expect(coords_from(manipulator)[:x]).to eq 0
@@ -66,7 +66,7 @@ describe InputProcessor do
           5 6 S
           M
         eos
-        let(:manipulator) { InputProcessor.new(input) }
+        let(:manipulator) { InputProcessor.process(input) }
 
         it 'with the x coord being 5' do
           expect(coords_from(manipulator)[:x]).to eq 5
@@ -89,7 +89,7 @@ describe InputProcessor do
             5 6 S
             MMM
         eos
-        manipulator = InputProcessor.new(input)
+        manipulator = InputProcessor.process(input)
 
         expect(commands_from(manipulator)).to eq 'MMM'
       end
@@ -100,7 +100,7 @@ describe InputProcessor do
             5 6 S
             LMLMLMLMLRRLMLMRLRLRLRLMLR
         eos
-        manipulator = InputProcessor.new(input)
+        manipulator = InputProcessor.process(input)
 
         expect(commands_from(manipulator)).to eq 'LMLMLMLMLRRLMLMRLRLRLRLMLR'
       end
@@ -115,7 +115,7 @@ describe InputProcessor do
       7 7 N
       LMRMLLM
     eos
-    let(:manipulator) { InputProcessor.new(input) }
+    let(:manipulator) { InputProcessor.process(input) }
     let(:first_result) { { coords: { x: 5, y: 6, cardinal: 'S' }, commands: 'M' } }
     let(:second_result) { { coords: { x: 7, y: 7, cardinal: 'N' }, commands: 'LMRMLLM' } }
 

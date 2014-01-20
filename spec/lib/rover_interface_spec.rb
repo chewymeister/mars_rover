@@ -6,9 +6,9 @@ describe RoverInterface do
   context 'with a single command' do
     it 'should have an output of "0 0 W"' do
       input = <<-eos
-      20 20
-      0 0 N
-      L
+        20 20
+        0 0 N
+        L
       eos
       interface.receive(input)
 
@@ -17,9 +17,9 @@ describe RoverInterface do
 
     it 'should have an output of "0 0 E"' do
       input = <<-eos
-      20 20
-      0 0 N
-      R
+        20 20
+        0 0 N
+        R
       eos
       interface.receive(input)
 

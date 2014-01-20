@@ -1,4 +1,8 @@
 class InputProcessor
+  def self.process(input_string)
+    self.new(input_string)
+  end
+
   def initialize(input_string)
     @input_string = process(input_string)
   end
