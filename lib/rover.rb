@@ -2,9 +2,8 @@ class Rover
   FACING = { 'L' => -1, 'R' => 1 }
   
   def initialize(input)
-    @boundaries = input[:boundaries]
-    give_locator(coords_from(input[:instructions])) 
-    determine_path_using(commands_from(input[:instructions]))
+    @locator = give_locator(coords_from(input), input[:boundaries]) 
+    determine_path_using(commands_from(input))
   end
 
   def current_location
@@ -13,16 +12,16 @@ class Rover
 
   private
 
-  def commands_from(instructions)
-    instructions[:commands] 
+  def commands_from(input)
+    input[:instructions][:commands] 
   end
 
-  def coords_from(instructions)
-    instructions[:coords]
+  def coords_from(input)
+    input[:instructions][:coords]
   end
 
-  def give_locator(coords)
-    @locator = Locator.new(coords, @boundaries)
+  def give_locator(coords, boundaries)
+    Locator.new(coords, boundaries)
   end
 
   def determine_path_using(commands)
